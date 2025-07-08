@@ -6,11 +6,12 @@ import studentRouter from './routers/studentRouter.js';
 import productsRouter from './routers/productsRouter.js';
 import userRouter from './routers/usersRouter.js';
 import jwt from 'jsonwebtoken';
-
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express();
 
-const mongoUrl = "mongodb+srv://ramitha:121230@cluster0.zvqu42v.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+const mongoUrl = process.env.MONGO_DB_URI
 
 mongoose.connect(mongoUrl,{})
 
