@@ -14,13 +14,13 @@ const productSchema = mongoose.Schema({
 
     altNames : [
         {
-            type : string
+            type : String
         }
     ],
 
     images : [
         {
-            type : string
+            type : String
         }
     ],
 
@@ -30,12 +30,12 @@ const productSchema = mongoose.Schema({
     },
 
     lastPrice : {
-        type : string,
+        type : String,
         required : true
     },
 
     description : {
-        type : string,
+        type : String,
         required : true
     }
 
