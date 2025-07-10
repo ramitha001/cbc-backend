@@ -8,6 +8,23 @@ dotenv.config()
 export function createUser(req,res){
     
     const newUserData = req.body;
+
+    if(newUserData.type == "admin"){
+        if(req.user == null && req.user.type != "admin"){
+            res.json({
+                message : "please login as administrator to create admin account"
+            })
+            return
+        }
+
+        if(req.user.type != "admin"){
+            res.json({
+                message : "please login as administrator to create admin account"
+            })
+            return
+        }
+    }
+
     newUserData.password = bcrypt.hashSync(newUserData.password,10);
 
     const user = new User(newUserData);
