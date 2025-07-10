@@ -95,13 +95,8 @@ export function isAdmin (req){
     return true
 }
 
-export function isCustomer (req){
-    if(req.customer == null){
-        return false
-    }
-
-    if (req.customer.type != "customer"){
-        return false
-    }
-    return true
+export function isCustomer(req) {
+    const user = req.customer || req.user;
+    if (!user) return false;
+    return user.type === "customer";
 }
