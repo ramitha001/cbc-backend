@@ -46,3 +46,16 @@ export async function createOrder(req, res) {
         });
     }
 }
+
+export async function getOrder(req,res){
+    try{
+            const order = await Orders.find({email : req.user.email})
+
+            res.json (order)
+    }catch(error){
+            res.status(500).json({
+                message : error.message
+            })
+
+    }
+}
