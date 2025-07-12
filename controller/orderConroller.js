@@ -27,28 +27,42 @@ export async function createOrder(req, res) {
             orderID = "CBC" + newNumber;
         }
 
-        const newProdcutData = req.body;
+        const newProductData = req.body;
 
         const newProductArray = []
 
-        for(let i = 0; i<newProdcutData.orderdItems.length; i++ ){
+        for(let i = 0; i<newProductData.orderdItems.length; i++ ){
             const product = await Product.findOne({
-                productId : newProdcutData.orderdItems[i].productId
+                productId : newProductData.orderdItems[i].productId
             })
             if(product == null){
                 res.json({
-                    message : "Product Not Founded"
+                    message : "Product with id " + newProductData.orderdItems[i].productId + " not found"
                 })
                 return
             }
+
+            newProductArray[i] = {
+                namr : product.name,
+                price : product.price,
+                quantity : newProductData.orderdItems[i].quantity,
+                image : product.image[0]
+            }
+            
         }
+        console.log(newProductArray)
+
+        newProductData.orderdItems = newProductArray
         
-        newProdcutData.orderID = orderID;
+        newProductData.orderID = orderID;
 
         // ✅ Make sure req.user or req.customer is available (depending on auth middleware)
-        newProdcutData.email = req.user?.email || req.customer?.email;
+        newProductData.email = req.user?.email || req.customer?.email;
+        if (!newProductData.email) {
+            return res.status(400).json({ message: "User email not found in request" });
+        }
 
-        const order = new Orders(newProdcutData);
+        const order = new Orders(newProductData);
 
         await order.save();
 
@@ -65,7 +79,11 @@ export async function createOrder(req, res) {
 
 export async function getOrder(req,res){
     try{
-            const order = await Orders.find({email : req.user.email})
+            const email = req.user?.email;
+            if (!email) {
+                return res.status(400).json({ message: "User not authenticated" });
+            }
+            const order = await Orders.find({ email });
 
             res.json (order)
     }catch(error){
