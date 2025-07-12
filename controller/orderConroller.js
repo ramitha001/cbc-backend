@@ -2,6 +2,7 @@ import express from 'express'
 import Orders from '../models/orders.js'
 import mongoose from 'mongoose'
 import { isCustomer } from './userController.js'
+import Product from '../models/products.js';
 
 export async function createOrder(req, res) {
     // ✅ Fix: Call the function
@@ -31,7 +32,15 @@ export async function createOrder(req, res) {
         const newProductArray = []
 
         for(let i = 0; i<newProdcutData.orderdItems.length; i++ ){
-            console.log(newProdcutData.orderdItems[i])
+            const product = await Product.findOne({
+                productId : newProdcutData.orderdItems[i].productId
+            })
+            if(product == null){
+                res.json({
+                    message : "Product Not Founded"
+                })
+                return
+            }
         }
         
         newProdcutData.orderID = orderID;
