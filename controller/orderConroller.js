@@ -27,6 +27,13 @@ export async function createOrder(req, res) {
         }
 
         const newProdcutData = req.body;
+
+        const newProductArray = []
+
+        for(let i = 0; i<newProdcutData.orderdItems.length; i++ ){
+            console.log(newProdcutData.orderdItems[i])
+        }
+        
         newProdcutData.orderID = orderID;
 
         // ✅ Make sure req.user or req.customer is available (depending on auth middleware)

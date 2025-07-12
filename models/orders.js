@@ -17,11 +17,11 @@ const orderSchema = mongoose.Schema({
         {
             name : {
                 type : String,
-                required : true
+                required : false
             },
             price : {
                 type : String,
-                required : true
+                required : false
             },
             quantity : {
                 type : String,
@@ -29,7 +29,7 @@ const orderSchema = mongoose.Schema({
             },
             image : {
                 type : String,
-                required : true
+                required : false
             }
         }
     ],
