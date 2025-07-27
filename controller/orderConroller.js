@@ -42,6 +42,10 @@ export async function createOrder(req, res) {
                 return
             }
 
+            if (!Array.isArray(product.image) || product.image.length === 0) {
+                return res.status(400).json({ message: `Product with id ${newProductData.orderdItems[i].productId} has no image` });
+            }
+
             newProductArray[i] = {
                 namr : product.name,
                 price : product.price,
