@@ -46,7 +46,7 @@ export function deleteProduct(req,res){
     const productID = req.params.productID
 
     Product.deleteOne({productID : productID}).then(()=>{
-        res.json(()=>{
+        res.json({
             message : "product Deleted.."
         })
     }).catch((error)=>{
