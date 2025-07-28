@@ -43,7 +43,7 @@ export function deleteProduct(req,res){
         return
     }
 
-    const productID = req.params.productID
+    const productID = req.params.productId
 
     Product.deleteOne({productID : productID}).then(()=>{
         res.json({
