@@ -56,4 +56,25 @@ export function deleteProduct(req,res){
     })
 }
 
+export function updateProduct(req,res){
+    if(!isAdmin(req)){
+        res.status(403).json({
+            message : "Please login as administrator to update product"
+        })
+    }
+
+    const productID = req.params.productId
+    const productData = req.body
+
+    Product.updateOne({productID : productID},productData).then(()=>{
+        res.json({
+            message : "product Updated.."
+        })
+    }).catch((error)=>{
+        res.status(403).json({
+            message : error
+        })
+    })
+}
+
 
